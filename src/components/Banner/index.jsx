@@ -1,9 +1,8 @@
-import axios from "./axios";
-import React, { useEffect, useState } from "react";
+import axios from "../../axios";
+import React, { memo, useEffect, useState } from "react";
 
-import "./Banner.css";
-import requests from "./Request";
-
+import style from "./Banner.module.scss";
+import requests from "../../Request";
 
 const Banner = () => {
   const [movie, setMovie] = useState([]);
@@ -15,6 +14,7 @@ const Banner = () => {
   };
 
   useEffect(() => {
+    console.log("sfefsfe");
     async function fetchData() {
       const request = await axios.get(requests.fetchNetflixOriginal);
       setMovie(
@@ -28,7 +28,7 @@ const Banner = () => {
   }, []);
   return (
     <header
-      className="banner"
+      className={style["banner"]}
       style={{
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
@@ -36,19 +36,21 @@ const Banner = () => {
         backgroundPosition: "center center",
       }}
     >
-      <div className="banner__contents">
-        <span className="banner__title">{movie?.name || movie?.title || movie?.original_name}</span>
-        <div className="banner__buttons">
-          <button className="banner__button">play</button>
-          <button className="banner__button">my list</button>
+      <div className={style["banner__contents"]}>
+        <span className={style["banner__title"]}>
+          {movie?.name || movie?.title || movie?.original_name}
+        </span>
+        <div className={style["banner__buttons"]}>
+          <button className={style["banner__button"]}>play</button>
+          <button className={style["banner__button"]}>my list</button>
         </div>
-        <span title={movie?.overview} className="banner__description">
+        <span title={movie?.overview} className={style["banner__description"]}>
           {truncate(movie?.overview, 150)}
         </span>
       </div>
-      <div className="banner--fadeBottom" />
+      <div className={style["banner--fadeBottom"]} />
     </header>
   );
 };
 
-export default Banner;
+export default memo(Banner);

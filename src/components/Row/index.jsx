@@ -1,4 +1,4 @@
-import axios from "./axios";
+import axios from "../../axios";
 import React, { useEffect, useState } from "react";
 import "./Row.css";
 
@@ -15,7 +15,6 @@ function Row({ title, fetchURL, isLargeRow = false }) {
     }
     fetchData();
   }, [fetchURL]);
-  console.log({ movie });
   return (
     <div className="row">
       <h2>{title}</h2>

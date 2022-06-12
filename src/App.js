@@ -4,7 +4,7 @@ import HomeScreen from 'pages/homeScreen';
 
 function App() {
   return (
-    <div className="app">
+    <div id="app" data-theme='light'>
      <HomeScreen />
     </div>
   );

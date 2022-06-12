@@ -1,0 +1,18 @@
+$themes: (light: (primary: red,
+        text: #FFF),
+    dark: (primary: blue,
+        text: #212121));
+
+:root {
+
+    @each $theme,
+    $colors in $themes {
+        #app[data-theme=#{$theme}] {
+
+            @each $name,
+            $color in $colors {
+                --s-#{$name}:#{$color}
+            }
+        }
+    }
+}

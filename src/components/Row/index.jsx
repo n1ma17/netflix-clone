@@ -1,38 +1,30 @@
 import axios from "../../axios";
 import React, { useEffect, useState } from "react";
-import "./Row.css";
+import style from "./Row.module.scss";
+import Carousel from "components/Carousel";
+import Button from "components/shared/Button";
 
 function Row({ title, fetchURL, isLargeRow = false }) {
-  const [movie, setMovie] = useState([]);
+  const [movies, setMovies] = useState([]);
 
-  const base_URL = "https://image.tmdb.org/t/p/original/";
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(fetchURL);
-      setMovie(request.data.results);
-      console.log(request.data.results);
+      setMovies(request.data.results);
       return request;
     }
     fetchData();
   }, [fetchURL]);
   return (
-    <div className="row">
-      <h2>{title}</h2>
-      <div className="row__posters">
-        {movie?.map(
-          (item) =>
-            ((isLargeRow && item.poster_path) ||
-              (!isLargeRow && item.backdrop_path)) && (
-              <img
-                className={`row__poster ${isLargeRow && "row__posterLarge"}`}
-                src={`${base_URL}${
-                  isLargeRow ? item.poster_path : item.backdrop_path
-                }`}
-                alt={item.name}
-              />
-            )
-        )}
+    <div className={style["row"]}>
+      <div className={style["row__header"]}>
+        <span className={style["row__header__title"]}>{title}</span>
+        <div className={style["row__header__buttons"]}>
+          <Button btnText='Next' />
+          <Button btnText='Prev' />
+        </div>
       </div>
+      <Carousel movies={movies} isLargeRow={isLargeRow} />
     </div>
   );
 }
